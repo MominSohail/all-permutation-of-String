@@ -1,0 +1,70 @@
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class GFG {
+   static ArrayList<String> allString=new ArrayList<String>();
+    static String str;
+    static void permute(char strArray[],int count[],char result[],int level)
+    {
+        if(level==str.length())
+        {
+            allString.add(String.valueOf(result));
+            return;
+        }
+        for(int i=0;i<strArray.length;i++)
+        {
+           if(count[i]<=0)
+             continue;
+            count[i]--;
+            result[level]=strArray[i];
+            permute(strArray,count,result,level+1);
+            count[i]++;
+        }
+        
+    }
+    
+    
+	public static void main (String[] args) {
+	   // GFG gfg=new GFG();
+	    Scanner sc=new Scanner(System.in);
+	    int T=sc.nextInt();
+	    
+	    for(int t=0;t<T;t++)
+	    {
+	        str=sc.next();
+	        
+	  TreeMap<Character, Integer> tm=new TreeMap<Character, Integer>();
+	  
+	  for(int i=0;i<str.length();i++) 
+	  {
+	      if(tm.containsKey(str.charAt(i)))
+	        tm.put(str.charAt(i),tm.get(str.charAt(i))+1);
+	        else
+	        tm.put(str.charAt(i),1);
+	  }
+	
+	  int[] count =new int[tm.size()];
+	  char[] strArray=new char[tm.size()];
+	  char[]  result=new char[str.length()];
+       int index=0;	 
+  	 for(Map.Entry m:tm.entrySet())
+	  {
+	      strArray[index]=(char)m.getKey();
+	      count[index]=(int)m.getValue();
+	         index++;
+	      //System.out.println(m.getKey()+" "+m.getValue());
+	  }
+	     allString.clear();
+	   permute(strArray,count,result,0);
+	   
+	   for(String s:allString)
+	   {
+	       System.out.print(s+" ");
+	   }
+	   System.out.println();
+	        
+	    }
+		//code
+	}
+}
